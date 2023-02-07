@@ -21,12 +21,17 @@ class MyApp extends StatelessWidget {
 class ToDoList extends StatefulWidget {
   const ToDoList({Key? key}) : super(key: key);
 
+  //modal bottom sheet is used from anywhere in the screen for getting data from users
+  //bottom sheet is used only for showing data
+
   @override
   State<ToDoList> createState() => _ToDoListState();
 }
 
 class _ToDoListState extends State<ToDoList> {
   List<String> todos=[];
+  TextEditingController todocontroller=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,10 +46,48 @@ class _ToDoListState extends State<ToDoList> {
       floatingActionButton: FloatingActionButton(
         child: const Text('Add'),
         onPressed: (){
-         // todos.add('New To do');
-          setState(() {
+         showModalBottomSheet(
+             isDismissible: true,
+             barrierColor: Colors.black12,
+             backgroundColor: Colors.lightGreenAccent,
 
-          });
+             shape: const RoundedRectangleBorder(
+               borderRadius: BorderRadius.only(
+                 topLeft: Radius.circular(20),
+                 topRight: Radius.circular(20),
+               )
+             ),
+
+             isScrollControlled: false,
+            // enableDrag: true,
+             context: context,
+             builder: (context){
+           return Padding(
+             padding: const EdgeInsets.all(16.0),
+             child: Column(
+               children: [
+                 TextField(
+                   decoration: const InputDecoration(
+                     hintText: 'Write New To Do here',
+                   ),
+
+                   controller: todocontroller,
+                 ),
+                 ElevatedButton(onPressed: (){
+
+                   todos.add(todocontroller.text);
+                   todocontroller.clear();
+
+                   setState(() {});
+                   Navigator.pop(context);
+
+
+
+                 }, child: const Text('Add Item'))
+               ],
+             ),
+           );
+         });
         },
       ),
     );
