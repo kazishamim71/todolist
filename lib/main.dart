@@ -12,10 +12,45 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.pink),
-      home: const CounterScreen(),
+     // home: const CounterScreen(),
+      home: ToDoList(),
     );
   }
 }
+
+class ToDoList extends StatefulWidget {
+  const ToDoList({Key? key}) : super(key: key);
+
+  @override
+  State<ToDoList> createState() => _ToDoListState();
+}
+
+class _ToDoListState extends State<ToDoList> {
+  List<String> todos=[];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('TO DO LIST'),),
+      body: ListView.builder(
+          itemCount: todos.length,
+          itemBuilder: (context, index){
+        return ListTile(
+          title: Text(todos[index]),
+        );
+      }),
+      floatingActionButton: FloatingActionButton(
+        child: const Text('Add'),
+        onPressed: (){
+         // todos.add('New To do');
+          setState(() {
+
+          });
+        },
+      ),
+    );
+  }
+}
+
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({Key? key}) : super(key: key);
